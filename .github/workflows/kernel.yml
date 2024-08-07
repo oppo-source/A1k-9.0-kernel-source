@@ -30,19 +30,19 @@ jobs:
       id: props
       run: |
         echo "date=$(TZ=Asia/Jakarta date +%Y%m%d-%I%M%p)" >> $GITHUB_OUTPUT
-
-    - name: Compressed as Archive
-      run: |
-        cd /home/runner/work/myKernel/out/arch/arm64/boot || exit 1
-        zip -r9 "GedhangKernel-Build-${{ github.run_id }}.zip" ./* -x "dts" -x "dts/*"
+        
+     - name: anykernel ~ zipping
+        run: |
+         git clone https://github.com/nathannxx/AnyKernel3 ~/any/ && \
+         cp -r ~/out/arch/arm64/boot/Image.gz-dtb ~/any/ && \
+         cd ~/any/ && zip -r9 GedhangGoreng-Kernel-${{ github.run_id }}.zip *
         
     - name: Release
       uses: ncipollo/release-action@v1.12.0
       with:
         artifacts: |
-          /home/runner/work/myKernel/out/arch/arm64/boot/*.zip
-          /home/runner/work/myKernel/build.log
-        name: Compiled Kernel for GedhangGorengKernel-${{ github.run_id }}
+          /home/runner/any/GedhangGoreng-Kernel*
+        name: GedhangGorengKernel-${{ github.run_id }}
         draft: false
         prerelease: false
         tag: ${{ github.run_id }}
@@ -50,7 +50,6 @@ jobs:
         body: |
           ## Notes
             - Flash this kernel on TWRP or Any Custom recoveries for this device
-            - Include building logs.
 
     - name: Link of Release
       run: |
