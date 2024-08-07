@@ -1,0 +1,58 @@
+name: Build Kernal bhai
+
+on: 
+  workflow_dispatch:
+    inputs:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3 device-tree-compiler
+
+    - name: Start Building Kernel
+      run: |
+        export KBUILD_BUILD_USER="GedhangGoreng-Kernel"
+        export KBUILD_BUILD_HOST="noHost"
+        chmod +x build
+        ./build
+
+    - name: Set Properties
+      id: props
+      run: |
+        echo "date=$(TZ=Asia/Jakarta date +%Y%m%d-%I%M%p)" >> $GITHUB_OUTPUT
+
+    - name: Compressed as Archive
+      run: |
+        cd /home/runner/work/myKernel/out/arch/arm64/boot || exit 1
+        zip -r9 "${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
+
+    - name: Release
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        artifacts: |
+          /home/runner/work/myKernel/out/arch/arm64/boot/*.zip
+          /home/runner/work/myKernel/build.log
+        name: Compiled Kernel for ${{ github.event.inputs.DEVICE_NAME }} - ${{ steps.props.outputs.date }}
+        draft: false
+        prerelease: false
+        tag: ${{ github.run_id }}-${{ steps.props.outputs.date }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          ## Notes
+            - Extract ${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
+            - Include building logs.
+
+    - name: Link of Release
+      run: |
+        echo "Enjoy your Newly Built Kernel"
+        echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}-${{ steps.props.outputs.date }}"
