@@ -120,7 +120,7 @@ CONFIG_MTK_PMIC_WRAP_HAL=y
 CONFIG_MTK_THERMAL_PA_VIA_ATCMD=y
 # ifdef ODM_HQ_EDIT
 #Yankun.Zhai@ODM_HQ.Multimedia.camera, 2018/12/7, modify for camera bring up
-CONFIG_CUSTOM_KERNEL_IMGSENSOR="hi846_mipi_raw s5k3h7yx_mipi_raw s5k3h7yx_txd_mipi_raw s5k3h7yx_ts_mipi_raw hi556_mipi_raw gc5035_mipi_raw gc5035_ofg_mipi_raw gc2375h_mipi_raw sp2509v_mipi_raw gc2375h_ly_mipi_raw"
+CONFIG_CUSTOM_KERNEL_IMGSENSOR=""
 # endif #ODM_HQ_EDIT
 CONFIG_MTK_VIDEOCODEC_DRIVER=y
 CONFIG_MTK_CAMERA_ISP_DPE_SUPPORT=y
