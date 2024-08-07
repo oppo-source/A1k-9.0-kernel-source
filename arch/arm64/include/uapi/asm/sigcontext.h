@@ -16,6 +16,7 @@
 #ifndef _UAPI__ASM_SIGCONTEXT_H
 #define _UAPI__ASM_SIGCONTEXT_H
 
+#ifdef CONFIG_64BIT
 #include <linux/types.h>
 
 /*
