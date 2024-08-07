@@ -34,7 +34,7 @@ jobs:
     - name: Compressed as Archive
       run: |
         cd /home/runner/work/myKernel/out/arch/arm64/boot || exit 1
-        zip -r9 "${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
+        zip -r9 "GedhangKernel-Build-${{ github.run_id }}.zip" ./* -x "dts" -x "dts/*"
 
     - name: Release
       uses: ncipollo/release-action@v1.12.0
@@ -42,17 +42,17 @@ jobs:
         artifacts: |
           /home/runner/work/myKernel/out/arch/arm64/boot/*.zip
           /home/runner/work/myKernel/build.log
-        name: Compiled Kernel for ${{ github.event.inputs.DEVICE_NAME }} - ${{ steps.props.outputs.date }}
+        name: Compiled Kernel for GedhangGorengKernel-${{ github.run_id }}
         draft: false
         prerelease: false
-        tag: ${{ github.run_id }}-${{ steps.props.outputs.date }}
+        tag: ${{ github.run_id }}
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           ## Notes
-            - Extract ${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
+            - Extract GedhangGoreng-Kernel-${{ github.run_id }}.zip, look your newly-compiled kernel inside.
             - Include building logs.
 
     - name: Link of Release
       run: |
         echo "Enjoy your Newly Built Kernel"
-        echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}-${{ steps.props.outputs.date }}"
+        echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}"
