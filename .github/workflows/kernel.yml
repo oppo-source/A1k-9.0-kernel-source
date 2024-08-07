@@ -35,7 +35,7 @@ jobs:
       run: |
         cd /home/runner/work/myKernel/out/arch/arm64/boot || exit 1
         zip -r9 "GedhangKernel-Build-${{ github.run_id }}.zip" ./* -x "dts" -x "dts/*"
-
+        
     - name: Release
       uses: ncipollo/release-action@v1.12.0
       with:
@@ -49,7 +49,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           ## Notes
-            - Extract GedhangGoreng-Kernel-${{ github.run_id }}.zip, look your newly-compiled kernel inside.
+            - Flash this kernel on TWRP or Any Custom recoveries for this device
             - Include building logs.
 
     - name: Link of Release
