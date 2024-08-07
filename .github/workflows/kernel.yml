@@ -41,17 +41,17 @@ jobs:
         artifacts: |
           /home/runner/work/myKernel/out/arch/arm64/boot/*.zip
           /home/runner/work/myKernel/build.log
-        name: Compiled Kernel for ${{ github.event.inputs.DEVICE_NAME }} - ${{ steps.props.outputs.date }}
+        name: Compiled Kernel for GedhangGorengKernel-${{ github.run_id }}
         draft: false
         prerelease: false
-        tag: ${{ github.run_id }}-${{ steps.props.outputs.date }}
+        tag: ${{ github.run_id }}
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           ## Notes
-            - Extract GedhangKernel-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
+            - Extract ${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
             - Include building logs.
 
     - name: Link of Release
       run: |
         echo "Enjoy your Newly Built Kernel"
-        echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}-${{ steps.props.outputs.date }}"
+        echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}"
