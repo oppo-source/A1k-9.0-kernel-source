@@ -33,9 +33,9 @@ jobs:
 
       - name: Compressed as Archive
         run: |
-          git clone https://github.com/nathannxx/AnyKernel3 any/
-          cp /home/runner/work/myKernel/out/arch/arm64/boot/Image.gz-dtb any/
-          cd any/ && zip -r9 GedangGoreng-${{ github.run_id }}.zip *
+         git clone https://github.com/nathannxx/AnyKernel3 any/
+         cp /home/runner/work/myKernel/out/arch/arm64/boot/Image.gz-dtb any/
+         cd any/ && zip -r9 GedangGoreng-${{ github.run_id }}.zip *
 
       - name: Release
         uses: ncipollo/release-action@v1.12.0
