@@ -17,7 +17,7 @@ GCC_BRANCH="master-kernel-build-2021"
 
 # Setup make Command
 make_fun() {
-	make O=out ARCH=arm64 CC=clang HOSTCC=clang DTC=dtc \
+	make O=~/out ARCH=arm64 CC=clang HOSTCC=clang DTC=dtc \
 		CLANG_TRIPLE=aarch64-linux-gnu- \
 		CROSS_COMPILE=aarch64-linux-androidkernel- "$@"
 }
