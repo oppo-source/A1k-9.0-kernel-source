@@ -26,7 +26,7 @@ make_fun() {
 if [ ! -d clang ]; then mkdir clang && curl -Lsq "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang; fi
 [ ! -d x64 ] && git clone --depth=1 "${GCC_x64}" -b "${GCC_BRANCH}" ./x64
 [ ! -d x32 ] && git clone --depth=1 "${GCC_x32}" -b "${GCC_BRANCH}" ./x32
-[ ! -d "${KERNEL}" ] && git clone --depth=1 "${KERNEL_SOURCE}" -b "${KERNEL_BRANCH}" "${KERNEL}"
+[ ! -d "${KERNEL}" ] && git clone --depth=1 "${KERNEL_SOURCE}" -b "${KERNEL_BRANCH}" "~/"
 
 # Setting Toolchain Path
 PATH="~/clang/bin:~/x64/bin:~/x32/bin:/bin"
