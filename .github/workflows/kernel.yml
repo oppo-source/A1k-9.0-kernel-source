@@ -22,6 +22,7 @@ jobs:
       run: |
         export KBUILD_BUILD_USER="GedhangGoreng-Kernel"
         export KBUILD_BUILD_HOST="#enakbanget"
+        chmod +x build
         ./build
 
     - name: Set Properties
