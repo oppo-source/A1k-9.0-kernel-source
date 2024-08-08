@@ -22,19 +22,6 @@ make_fun() {
 		CROSS_COMPILE=aarch64-linux-androidkernel- "$@"
 }
 
-# Work Path
-WORK="${HOME}/work"
-
-# Kernel Folder Name
-KERNEL="myKernel"
-
-# Kernel Source Path
-KERNEL_SRC="${WORK}/${KERNEL}"
-
-# Prepare Directory
-mkdir -p "${WORK}"
-cd "${WORK}" || exit 1
-
 # Cloning all the Necessary files
 if [ ! -d clang ]; then mkdir clang && curl -Lsq "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang; fi
 [ ! -d x64 ] && git clone --depth=1 "${GCC_x64}" -b "${GCC_BRANCH}" ./x64
