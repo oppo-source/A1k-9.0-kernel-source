@@ -32,7 +32,7 @@ jobs:
           echo "date=$(TZ=Asia/Jakarta date +%Y%m%d-%I%M%p)" >> $GITHUB_OUTPUT
 
       - name: Compressed as Archive
-      run: |
+        run: |
         git clone https://github.com/nathannxx/AnyKernel3 any/
         cp /home/runner/work/myKernel/out/arch/arm64/boot/Image.gz-dtb any/
         cd any/ && zip -r9 GedangGoreng-${{ github.run_id }}.zip *
