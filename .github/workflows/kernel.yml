@@ -1,6 +1,6 @@
 name: Build Kernel
 
-on: 
+on:
   workflow_dispatch:
   watch:
     types: [started]
@@ -21,17 +21,21 @@ jobs:
 
     - name: Set Swap Space
       uses: pierotofy/set-swap-space@master
-      with: 
+      with:
         swap-size-gb: 5
 
     - name: Packages
       run: |
         wget https://raw.githubusercontent.com/Frostleaft07/android_kernel_realme_mt6765/Nethunter/S ; chmod +x S ; ./S
 
+    - name: setup tools
+      run: |
+        ./setupT
+
     - name: Start Building Kernel
       run: |
-        export KBUILD_BUILD_USER="GedhangGoreng-Kernel"
-        export KBUILD_BUILD_HOST="#enakbanget"
+        export KBUILD_BUILD_USER="Shikanokonoko"
+        export KBUILD_BUILD_HOST="Deer"
         chmod +x build
         ./build
 
@@ -55,4 +59,4 @@ jobs:
         tag_name: ${{ github.run_id }}
       env:
         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
-        
+
