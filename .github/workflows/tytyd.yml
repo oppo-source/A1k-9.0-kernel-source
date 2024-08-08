@@ -40,8 +40,8 @@ jobs:
          
       - name: start up
         run: |
-         chmod +x build
-         ./build
+         chmod +x buildK
+         ./buildK
 
       - name: anykernel ~ zipping
         run: |
