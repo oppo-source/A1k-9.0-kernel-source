@@ -33,7 +33,7 @@ jobs:
     - name: Compressed as Archive
       run: |
         cd /home/runner/work/myKernel/out/arch/arm64/boot || exit 1
-        zip -r9 "${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
+        zip -r9 "GedhangKernel-${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
 
     - name: Release
       uses: ncipollo/release-action@v1.12.0
@@ -48,7 +48,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           ## Notes
-            - Extract ${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
+            - Extract GedhangKernel-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
             - Include building logs.
 
     - name: Link of Release
