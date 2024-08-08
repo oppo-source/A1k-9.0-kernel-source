@@ -34,7 +34,7 @@ jobs:
       - name: anykernel ~ zipping
         run: |
           git clone https://github.com/nathannxx/AnyKernel3 ~/any/ && \
-          cp -r ~/out/arch/arm64/boot/Image.gz-dtb ~/any/ && \
+          cp -r ~/home/runner/work/myKernel/out ~/any/ && \
           cd ~/any/ && zip -r9 GedhangGoreng-Kernel-${{ github.run_id }}.zip *
 
       - name: Release
