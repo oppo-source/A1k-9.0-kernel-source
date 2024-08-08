@@ -34,8 +34,9 @@ jobs:
       - name: anykernel ~ zipping
         run: |
           git clone https://github.com/nathannxx/AnyKernel3 ~/any/ && \
-          cp -r ~/home/runner/work/myKernel/out ~/any/ && \
-          cd ~/any/ && zip -r9 GedhangGoreng-Kernel-${{ github.run_id }}.zip *
+          cp -r ~/home/runner/work/myKernel/out/* ~/any/ && \
+          cd ~/home/runner/work/myKernel/out/* && zip -r9 GedhangGoreng-Kernel-${{ github.run_id }}.zip *
+
 
       - name: Release
         uses: ncipollo/release-action@v1.12.0
