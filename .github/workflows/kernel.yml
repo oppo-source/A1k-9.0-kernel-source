@@ -33,7 +33,7 @@ jobs:
 
       - name: Compressed as Archive
         run: |
-          git clone https://github.com/Frostleaft07/AnyKernel3 ~/home/runner/work/myKernel/out/arch/arm64/Kernel && \
+          git clone https://github.com/nathannxx/AnyKernel3 ~/home/runner/work/myKernel/out/arch/arm64/Kernel && \
           cp -r ~/home/runner/work/myKernel/out/arch/arm64/boot/Image Image.gz Image.gz-dtb ~/home/runner/work/myKernel/out/arch/arm64/Kernel && \
           cd ~/home/runner/work/myKernel/out/arch/arm64/Kernel || exit 1 && \
           zip -r9 "GedhangGoreng-Kernel Build ${{ github.run_id }}.zip" ./* -x "dts" -x "dts/*"
