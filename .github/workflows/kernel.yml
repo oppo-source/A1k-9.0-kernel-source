@@ -3,26 +3,26 @@ name: Build Kernel
 on: 
   workflow_dispatch:
   watch:
-   types: [started]
+    types: [started]
 
 defaults:
   run:
-   shell: bash
-  
+    shell: bash
+
 permissions:
   contents: write
 
 jobs:
-   build:
+  build:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-     - name: Set Swap Space
-       uses: pierotofy/set-swap-space@master
-       with: 
-         swap-size-gb: 5
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@master
+      with: 
+        swap-size-gb: 5
 
     - name: Packages
       run: |
@@ -50,9 +50,10 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-         files: |
+        files: |
           /home/runner/any/GedhangGorengKernelSU*
-           name: GedhangGorengKernelSU-${{ github.run_id }}
-           tag_name: ${{ github.run_id }}
-        env:
-         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+        name: GedhangGorengKernelSU-${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+        
