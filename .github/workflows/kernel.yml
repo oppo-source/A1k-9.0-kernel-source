@@ -1,6 +1,6 @@
-name: Build Kernal bhai
+name: Build Kernel bhai
 
-on: 
+on:
   workflow_dispatch:
     inputs:
 
@@ -11,47 +11,47 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
+      - name: Checkout
+        uses: actions/checkout@main
 
-    - name: Packages
-      run: |
-        sudo apt-get update
-        sudo apt-get install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3 device-tree-compiler
-
-    - name: Start Building Kernel
-      run: |
-        export KBUILD_BUILD_USER="GedhangGoreng-Kernel"
-        export KBUILD_BUILD_HOST="noHost"
-        chmod +x build
-        ./build
-
-    - name: Set Properties
-      id: props
-      run: |
-        echo "date=$(TZ=Asia/Jakarta date +%Y%m%d-%I%M%p)" >> $GITHUB_OUTPUT
-        
-     - name: anykernel ~ zipping
+      - name: Packages
         run: |
-         git clone https://github.com/nathannxx/AnyKernel3 ~/any/ && \
-         cp -r ~/out/arch/arm64/boot/Image.gz-dtb ~/any/ && \
-         cd ~/any/ && zip -r9 GedhangGoreng-Kernel-${{ github.run_id }}.zip *
-        
-    - name: Release
-      uses: ncipollo/release-action@v1.12.0
-      with:
-        artifacts: |
-          /home/runner/any/GedhangGoreng-Kernel*
-        name: GedhangGorengKernel-${{ github.run_id }}
-        draft: false
-        prerelease: false
-        tag: ${{ github.run_id }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        body: |
-          ## Notes
-            - Flash this kernel on TWRP or Any Custom recoveries for this device
+          sudo apt-get update
+          sudo apt-get install git ccache automake flex lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib libxml2-utils bzip2 libbz2-dev libbz2-1.0 libghc-bzlib-dev squashfs-tools pngcrush schedtool dpkg-dev liblz4-tool make optipng maven libssl-dev pwgen libswitch-perl policycoreutils minicom libxml-sax-base-perl libxml-simple-perl bc libc6-dev-i386 lib32ncurses5-dev libx11-dev lib32z-dev libgl1-mesa-dev xsltproc unzip device-tree-compiler python2 python3 device-tree-compiler
 
-    - name: Link of Release
-      run: |
-        echo "Enjoy your Newly Built Kernel"
-        echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}"
+      - name: Start Building Kernel
+        run: |
+          export KBUILD_BUILD_USER="GedhangGoreng-Kernel"
+          export KBUILD_BUILD_HOST="noHost"
+          chmod +x build
+          ./build
+
+      - name: Set Properties
+        id: props
+        run: |
+          echo "date=$(TZ=Asia/Jakarta date +%Y%m%d-%I%M%p)" >> $GITHUB_OUTPUT
+
+      - name: anykernel ~ zipping
+        run: |
+          git clone https://github.com/nathannxx/AnyKernel3 ~/any/ && \
+          cp -r ~/out/arch/arm64/boot/Image.gz-dtb ~/any/ && \
+          cd ~/any/ && zip -r9 GedhangGoreng-Kernel-${{ github.run_id }}.zip *
+
+      - name: Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          artifacts: |
+            /home/runner/any/GedhangGoreng-Kernel*
+          name: GedhangGorengKernel-${{ github.run_id }}
+          draft: false
+          prerelease: false
+          tag: ${{ github.run_id }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            ## Notes
+              - Flash this kernel on TWRP or Any Custom recoveries for this device
+
+      - name: Link of Release
+        run: |
+          echo "Enjoy your Newly Built Kernel"
+          echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}"
