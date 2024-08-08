@@ -2,6 +2,12 @@ name: Build Kernel
 
 on: 
   workflow_dispatch:
+  watch:
+   types: [started]
+
+defaults:
+  run:
+   shell: bash
   
 permissions:
   contents: write
@@ -11,7 +17,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Checkout
-      uses: actions/checkout@main
+      uses: actions/checkout@v2
+
+     - name: Set Swap Space
+       uses: pierotofy/set-swap-space@master
+       with: 
+         swap-size-gb: 5
 
     - name: Packages
       run: |
@@ -32,26 +43,16 @@ jobs:
 
     - name: Compressed as Archive
       run: |
-        cd /home/runner/work/myKernel/out/arch/arm64/boot || exit 1
-        zip -r "Gedhanggodokmemek.zip" ./* -x "dts" -x "dts/*"
+        git clone https://github.com/nathannxx/AnyKernel3 ~/any/ && \
+        cp -r ~/out/arch/arm64/boot/Image.gz-dtb ~/any/ && \
+        cd ~/any/ && zip -r9 GedhangGorengKernelSU-${{ github.run_id }}.zip *
 
     - name: Release
-      uses: ncipollo/release-action@v1.12.0
+      uses: softprops/action-gh-release@v1
       with:
-        artifacts: |
-          /home/runner/work/myKernel/out/arch/arm64/boot/*.zip
-          /home/runner/work/myKernel/build.log
-        name: Compiled Kernel for GedhangGorengKernel-${{ github.run_id }}
-        draft: false
-        prerelease: false
-        tag: ${{ github.run_id }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-        body: |
-          ## Notes
-            - Extract ${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
-            - Include building logs.
-
-    - name: Link of Release
-      run: |
-        echo "Enjoy your Newly Built Kernel"
-        echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ github.run_id }}"
+         files: |
+          /home/runner/any/GedhangGorengKernelSU*
+           name: GedhangGorengKernelSU-${{ github.run_id }}
+           tag_name: ${{ github.run_id }}
+        env:
+         GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
