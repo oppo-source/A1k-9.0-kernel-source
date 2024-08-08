@@ -37,19 +37,21 @@ jobs:
           zip -r9 "GedhangGoreng-Kernel-Build${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
 
       - name: Release
-        uses: ncipollo/release-action@v1.12.0
-        with:
-          artifacts: |
-            /home/runner/any/GedhangGoreng-Kernel*
-          name: GedhangGorengKernel-${{ github.run_id }}
-          draft: false
-          prerelease: false
-          tag: ${{ github.run_id }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            ## Notes
-              - Flash this kernel on TWRP or Any Custom recoveries for this device
-
+      uses: ncipollo/release-action@v1.12.0
+      with:
+        artifacts: |
+          /home/runner/work/myKernel/out/arch/arm64/boot/*.zip
+          /home/runner/work/myKernel/build.log
+        name: Compiled Kernel for ${{ github.event.inputs.DEVICE_NAME }} - ${{ steps.props.outputs.date }}
+        draft: false
+        prerelease: false
+        tag: ${{ github.run_id }}-${{ steps.props.outputs.date }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          ## Notes
+            - Extract ${{ github.event.inputs.DEVICE_NAME }}-${{ steps.props.outputs.date }}.zip, look your newly-compiled kernel inside.
+            - Include building logs.
+            
       - name: Link of Release
         run: |
           echo "Enjoy your Newly Built Kernel"
