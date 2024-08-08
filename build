@@ -29,7 +29,7 @@ if [ ! -d clang ]; then mkdir clang && curl -Lsq "${CLANG_URL}" -o clang.tgz && 
 [ ! -d "${KERNEL}" ] && git clone --depth=1 "${KERNEL_SOURCE}" -b "${KERNEL_BRANCH}" "${KERNEL}"
 
 # Setting Toolchain Path
-PATH="${WORK}/clang/bin:${WORK}/x64/bin:${WORK}/x32/bin:/bin"
+PATH="~/clang/bin:~/x64/bin:~/x32/bin:/bin"
 
 # Enter Kernel root directory
 cd "${KERNEL_SRC}" || exit 1
