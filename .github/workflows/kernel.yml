@@ -32,10 +32,11 @@ jobs:
           echo "date=$(TZ=Asia/Jakarta date +%Y%m%d-%I%M%p)" >> $GITHUB_OUTPUT
 
       - name: Compressed as Archive
-        run: |
-         git clone https://github.com/nathannxx/AnyKernel3 /home/runner/work/myKernel/AnyKernel
-         cp /home/runner/work/myKernel/out/arch/arm64/boot/* /home/runner/work/myKernel/AnyKernel
-         cd /home/runner/work/myKernel/AnyKernel && zip -r9 GedangGoreng-${{ github.run_id }}.zip *
+      run: |
+        git clone https://github.com/Frostleaft07/AnyKernel3 ~/home/runner/work/myKernel/out/arch/arm64/Kernel && \
+        cp -r ~/home/runner/work/myKernel/out/arch/arm64/boot/* 
+        cd ~/home/runner/work/myKernel/out/arch/arm64/Kernel || exit 1
+        zip -r9 "GedhangGoreng-Kernel Build ${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
 
       - name: Release
         uses: ncipollo/release-action@v1.12.0
