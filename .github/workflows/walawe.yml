@@ -42,7 +42,10 @@ jobs:
                                   CROSS_COMPILE=CROSS_COMPILE=aarch64-linux-androidkernel- \
                                   CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/arm-linux-androideabi-4.9/bin/arm-linux-androideabi- "
           cd kernel-source
-          make ${args} ${{ env.KERNEL_CONFIG }}
+         make_fun() {
+	       make O=out ARCH=arm64 CC=clang HOSTCC=clang DTC=dtc \
+		      CLANG_TRIPLE=aarch64-linux-gnu- \
+		      CROSS_COMPILE=aarch64-linux-androidkernel- "$@"
           make -j$(($(getconf _NPROCESSORS_ONLN) * 2)) ${args}
 
       - name: Package kernel
