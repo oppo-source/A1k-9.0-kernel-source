@@ -40,12 +40,23 @@ jobs:
           export PATH=$GITHUB_WORKSPACE/clang/bin:${PATH}
           export CROSS_COMPILE=$GITHUB_WORKSPACE/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
           cd kernel-source
-          make O=out ARCH=arm64 CC=clang HOSTCC=clang DTC=dtc \
-               CLANG_TRIPLE=aarch64-linux-gnu- \
-               CROSS_COMPILE=$CROSS_COMPILE \
-               ${BUILD_ARGS} \
-               -j$(($(getconf _NPROCESSORS_ONLN) * 2))
-
+          make CC=clang ARCH=arm64 O=~/out oppo6762_18540_defconfig
+          make CC=clang LLVM=1 ARCH=arm64 O=~/out -j16 \
+                  HEADER_ARCH=arm64 \
+                  SUBARCH=arm64 \
+                  CXX=c++ \
+                  AR=llvm-ar \
+                  NM=llvm-nm \
+                  OBJDUMP=llvm-objdump \
+                  STRIP=llvm-strip \
+                  READELF=llvm-readelf \
+                  HOSTCXX=clang++ \
+                  HOSTAR=llvm-ar \
+                  LLVM_IAS=1 \
+                	CROSS_COMPILE=aarch64-linux-gnu- \
+                  CROSS_COMPILE_ARM32=arm-linux-gnueabi- \
+                  CLANG_TRIPLE=aarch64-linux-gnu-
+        
       - name: Package kernel
         run: |
           git clone --depth=1 ${{ env.ANYKERNEL_SOURCE }} -b ${{ env.ANYKERNEL_SOURCE_BRANCH }} AnyKernel3
