@@ -34,7 +34,7 @@ jobs:
       - name: Compressed as Archive
         run: |
           cd /home/runner/work/myKernel/out/arch/arm64/boot || exit 1
-          zip -r9 "GedhangGoreng-Kernel Build ${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
+          zip -r9 "GedhangGoreng-Kernel-Build${{ steps.props.outputs.date }}.zip" ./* -x "dts" -x "dts/*"
 
       - name: Release
         uses: ncipollo/release-action@v1.12.0
