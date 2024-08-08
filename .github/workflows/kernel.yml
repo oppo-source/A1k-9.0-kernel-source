@@ -2,11 +2,6 @@ name: Build Kernel bhai
 
 on:
   workflow_dispatch:
-    inputs:
-      DEVICE_NAME:
-        description: 'Name of the device for the kernel'
-        required: true
-        default: 'default-device'
 
 permissions:
   contents: write
