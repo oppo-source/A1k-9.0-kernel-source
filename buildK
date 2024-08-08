@@ -6,8 +6,10 @@ echo $KBUILD_BUILD_HOST
 echo -e "done?"
 sleep 2s
 
+CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-9.0.0_r61/clang-4691093.tar.gz"
+
 if [ ! -d clang ]; then mkdir clang && curl -Lsq "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang; fi
-PATH="~/clang/bin:~/x64/bin:~/x32/bin:/bin"
+PATH="~/clang/bin"
 
 make CC=clang ARCH=arm64 O=~/out oppo6762_18540_defconfig
 make CC=clang LLVM=1 ARCH=arm64 O=~/out -j16 \
